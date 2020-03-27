@@ -1,15 +1,15 @@
-package com.changgou.controller;
+package com.changgou.goods.controller;
 
 import com.changgou.goods.pojo.Brand;
-import com.changgou.service.BrandService;
+import com.changgou.goods.service.BrandService;
 import com.github.pagehelper.PageInfo;
 import entity.Result;
 import entity.StatusCode;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author caoqian
@@ -127,5 +127,17 @@ public class BrandController {
                                             @RequestBody Brand brand) {
         PageInfo<Brand> pageInfo = brandService.findPage(brand, page, size);
         return new Result<PageInfo<Brand>>(true, StatusCode.OK, "分页条件查询成功", pageInfo);
+    }
+
+    /**
+     * 根据分类名称查询品牌列表
+     *
+     * @param categoryName 商品分类名称
+     * @return
+     */
+    @GetMapping("/category/{categoryName}")
+    public Result<List<Map>> findBrandListByCategoryName(@PathVariable("categoryName") String categoryName) {
+        List<Map> brandList = brandService.findBrandListByCategoryName(categoryName);
+        return new Result<>(true, StatusCode.OK, "查询成功", brandList);
     }
 }

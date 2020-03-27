@@ -1,8 +1,8 @@
-package com.changgou.service.Impl;
+package com.changgou.goods.service.Impl;
 
-import com.changgou.dao.BrandMapper;
+import com.changgou.goods.dao.BrandMapper;
 import com.changgou.goods.pojo.Brand;
-import com.changgou.service.BrandService;
+import com.changgou.goods.service.BrandService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author caoqian
@@ -121,6 +122,17 @@ public class BrandServiceImpl implements BrandService {
         Example example = createExample(brand);
         List<Brand> brandList = brandMapper.selectByExample(example);
         return new PageInfo<Brand>(brandList);
+    }
+
+    /**
+     * 根据分类名称查询品牌列表
+     * @param categoryName 商品分类名称
+     * @return
+     */
+    @Override
+    public List<Map> findBrandListByCategoryName(String categoryName) {
+        List<Map> brandList = brandMapper.findBrandListByCategoryName(categoryName);
+        return brandList;
     }
 
     /**
